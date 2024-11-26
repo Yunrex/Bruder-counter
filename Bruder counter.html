@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Bruder Counter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .counter {
+            font-size: 72px;
+            color: #2196F3;
+            margin: 20px 0;
+        }
+
+        .instructions {
+            margin: 20px 0;
+            color: #666;
+        }
+
+        .bruder-text {
+            font-size: 24px;
+            margin: 20px 0;
+            min-height: 100px;
+            max-width: 600px;
+            word-wrap: break-word;
+        }
+
+        .negative {
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bruder Counter</h1>
+        <div class="counter" id="counter">0</div>
+        <div class="instructions">
+            Drücke die Leertaste um "Bruder" hinzuzufügen<br>
+            Drücke "0" um "Bruder" zu entfernen
+        </div>
+        <div class="bruder-text" id="bruderText"></div>
+    </div>
+
+    <script>
+        let count = 0;
+        const counterElement = document.getElementById('counter');
+        const bruderTextElement = document.getElementById('bruderText');
+
+        function updateCounter() {
+            counterElement.textContent = count;
+            // Ändere die Farbe zu rot wenn negativ
+            if (count < 0) {
+                counterElement.classList.add('negative');
+            } else {
+                counterElement.classList.remove('negative');
+            }
+            
+            // Aktualisiere den Bruder-Text
+            let bruderArray = Array(Math.abs(count)).fill('Bruder');
+            bruderTextElement.textContent = bruderArray.join(' ');
+            
+            // Füge ein Minus-Zeichen hinzu wenn negativ
+            if (count < 0) {
+                bruderTextElement.textContent = '- ' + bruderTextElement.textContent;
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Space') {
+                event.preventDefault();
+                count++;
+                updateCounter();
+            } else if (event.key === '0') {
+                event.preventDefault();
+                count--;
+                updateCounter();
+            }
+        });
+    </script>
+</body>
+</html>
